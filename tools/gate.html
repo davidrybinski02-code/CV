@@ -51,6 +51,8 @@ label{font-size:.85rem;color:var(--muted)}
       .then(function (key) { return crypto.subtle.decrypt({ name: 'AES-GCM', iv: dec(P.iv) }, key, dec(P.ct)); })
       .then(function (buf) {
         var html = new TextDecoder().decode(buf);
+        // keep the password for this tab so the page can decrypt its media (video)
+        try { sessionStorage.setItem('dr-cv-s', pw); } catch (e) {}
         document.open(); document.write(html); document.close();
       });
   }
